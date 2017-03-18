@@ -1,0 +1,14 @@
+.ocultar {
+    display: none !important;
+}
+
+button {
+    width: 80px;
+    height: 80px;
+    margin: 5px;
+}
+
+img {
+    margin: 0px;
+    padding: 0px;
+}
