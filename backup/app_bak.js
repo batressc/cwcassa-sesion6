@@ -1,5 +1,4 @@
 var icono = "";
-var parejasCount = undefined;
 
 function randomIconName() {
     var iconArray = new Array(
@@ -72,8 +71,8 @@ function crearTablero(filas, columnas, parejas) {
     }
 }
 
-//Asigna los eventos y logica del tablero
-function eventosTablero() {
+//Asignar eventos
+function asignarEventos() {
     $('button').click(function() {
         if ($(this).children().attr('class').search('resuelto') === -1 && $(this).children().attr('class').search('seleccionado') === -1) {
             iconoClick = $(this).attr('data-icon');
@@ -84,12 +83,7 @@ function eventosTablero() {
             } else if (icono === iconoClick) {
                 $(`i[class~="seleccionado"]`).addClass('resuelto');
                 $(`i[class~="seleccionado"]`).removeClass('seleccionado');
-                parejasCount--;
                 icono = "";
-                if (parejasCount === 0) {
-                    alert('Exitazo! Terminaste! (Drama rise :o)');
-                    parejasCount = undefined;
-                }
             } else {
                 //Retrasa un segundo que se desaparezcan las cartas
                 setTimeout(function() {
@@ -102,24 +96,8 @@ function eventosTablero() {
     });
 }
 
-//Asigna los eventos a los botones de la aplicacion
-function asignarEventos() {
-    $('#generar').click(function() {
-        var filas = $('#filas').val();
-        var columnas = $('#columnas').val();
-        if (filas * columnas % 2 === 0) {
-            //Borrando el tablero actual
-            $('#tablero').empty();
-            var parejas = crearParejas((filas * columnas) / 2);
-            parejasCount = (filas * columnas) / 2;
-            crearTablero(filas, columnas, parejas);
-            eventosTablero();
-        } else {
-            alert('La cantidad de filas y columnas debe generar pares de elementos (okey...)');
-        }
-    });
-}
-
 $(function(){
+    var parejas = crearParejas(10);
+    crearTablero(5, 4, parejas);
     asignarEventos();
 });
