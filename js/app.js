@@ -1,5 +1,7 @@
 var icono = "";
 var parejasCount = undefined;
+//previene que se den mas clicks cuando se esta en tiempo de espera
+var blockUI = false;
 
 function randomIconName() {
     var iconArray = new Array(
@@ -91,7 +93,7 @@ function crearTablero(filas, columnas, parejas) {
 //Asigna los eventos y logica del tablero
 function eventosTablero() {
     $('button').click(function() {
-        if ($(this).children().attr('class').search('resuelto') === -1 && $(this).children().attr('class').search('seleccionado') === -1) {
+        if ($(this).children().attr('class').search('resuelto') === -1 && $(this).children().attr('class').search('seleccionado') === -1 && blockUI === false) {
             iconoClick = $(this).attr('data-icon');
             $(this).children().toggleClass('ocultar');
             $(this).children().addClass('seleccionado');
@@ -108,9 +110,11 @@ function eventosTablero() {
                 }
             } else {
                 //Retrasa un segundo que se desaparezcan las cartas
+                blockUI = true;
                 setTimeout(function() {
                     $('i[class~="seleccionado"]').toggleClass('ocultar');
                     $('i[class~="seleccionado"]').removeClass('seleccionado');
+                    blockUI = false;
                 }, 1000);
                 icono = "";
             }
